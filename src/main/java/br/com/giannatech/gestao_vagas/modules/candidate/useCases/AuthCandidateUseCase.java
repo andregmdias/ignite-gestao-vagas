@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.security.sasl.AuthenticationException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -51,12 +52,10 @@ public class AuthCandidateUseCase {
         .withExpiresAt(expiresIn)
         .sign(algorithm);
 
-    var authCandidateResponseDTO = AuthCandidateResponseDTO
+      return AuthCandidateResponseDTO
             .builder()
             .access_token(token)
             .expires_in(expiresIn.toEpochMilli())
             .build();
-
-    return authCandidateResponseDTO;
   }
 }

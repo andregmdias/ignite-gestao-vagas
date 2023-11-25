@@ -32,8 +32,8 @@ public class SecurityConfig {
     httpSecurity.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth -> {
           auth
-              .requestMatchers("/candidates/").permitAll()
-              .requestMatchers("/companies/").permitAll()
+              .requestMatchers("/candidates").permitAll()
+              .requestMatchers("/companies").permitAll()
               .requestMatchers("/candidates/auth").permitAll()
               .requestMatchers("/companies/auth").permitAll()
               .requestMatchers(SWAGGER_LIST).permitAll();

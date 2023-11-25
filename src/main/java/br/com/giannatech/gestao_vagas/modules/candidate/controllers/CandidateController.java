@@ -50,7 +50,7 @@ public class CandidateController {
   private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
   @PostMapping
-  @Operation(summary = "Creates a new cnadidate profile", description = "Creates a new candidate profile with the given params")
+  @Operation(summary = "Creates a new candidate profile", description = "Creates a new candidate profile with the given params")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", content = {
           @Content(schema = @Schema(implementation = CandidateEntity.class), mediaType = "application/json")
@@ -67,7 +67,7 @@ public class CandidateController {
   }
 
   @GetMapping("/profile")
-  @PreAuthorize("hasRole('candidate')")
+  @PreAuthorize("hasRole('CANDIDATE')")
   @Operation(summary = "Profile", description = "Get the profile of candidate data")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", content = {
@@ -88,7 +88,7 @@ public class CandidateController {
   }
 
   @GetMapping("/jobs")
-  @PreAuthorize("hasRole('candidate')")
+  @PreAuthorize("hasRole('CANDIDATE')")
   @Operation(summary = "List all jobs", description = "List all jobs by filter")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", content = {
@@ -102,7 +102,7 @@ public class CandidateController {
 
 
   @PostMapping("/jobs/apply")
-  @PreAuthorize("hasRole('candidate')")
+  @PreAuthorize("hasRole('CANDIDATE')")
   @Operation(summary = "Jobs Apply", description = "Candidate applies to a job offer")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", content = {
