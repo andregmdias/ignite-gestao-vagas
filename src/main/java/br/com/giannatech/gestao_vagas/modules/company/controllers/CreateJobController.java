@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.giannatech.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import br.com.giannatech.gestao_vagas.modules.company.dto.CreateJobRequestDTO;
 import br.com.giannatech.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.giannatech.gestao_vagas.modules.company.useCases.CreateJobUseCase;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,7 +26,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/companies")
 @Tag(name = "Jobs", description = "Job API")
-public class JobController {
+public class CreateJobController {
 
   @Autowired
   private CreateJobUseCase createJobUseCase;

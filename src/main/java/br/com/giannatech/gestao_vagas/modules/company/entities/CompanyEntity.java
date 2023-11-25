@@ -3,6 +3,9 @@ package br.com.giannatech.gestao_vagas.modules.company.entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,6 +20,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "company")
 @Table(name = "companies")
 public class CompanyEntity {
