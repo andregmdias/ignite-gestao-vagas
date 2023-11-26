@@ -42,6 +42,7 @@ public class CreateJobControllerTest {
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
     }
+
     @Test
     public void should_be_able_to_create_a_new_job() throws Exception {
         var company = CompanyEntity.builder()
@@ -68,5 +69,34 @@ public class CreateJobControllerTest {
                 )
                 .andExpect(status().isOk());
     }
+
+        @Test
+    public void should_not_be_able_to_create_a_new_job_if_the_company_doesnt_exists() throws Exception {
+        var company = CompanyEntity.builder()
+                .cnpj("12345678912")
+                .username("COMPANY_USERNAME")
+                .email("company@email.com")
+                .password("123456789")
+                .website("https://companywebsite.com")
+                .description("COMPANY_DESCRIPTION")
+                .build();
+
+        companyRepository.saveAndFlush(company);
+
+        var createJobDTO = CreateJobRequestDTO.builder()
+                .description("New job offer")
+                .level("MID LEVEL")
+                .benefits("ALL EXISTENT").build();
+
+        mvc.perform(
+                post("/companies/jobs")
+                        .header("Authorization", TestUtils.createCompanyJWT(company.getId(), "JAVAGAS_@123#"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(TestUtils.objectToJson(createJobDTO))
+                )
+                .andExpect(status().isOk());
+    }
+
+
 
 }
