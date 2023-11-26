@@ -13,9 +13,9 @@ import java.util.UUID;
 @Builder
 public class ProfileCandidateReponseDTO {
 
-  private UUID id;
-  private String description;
-  private String email;
-  private String username;
-  private String name;
+	private UUID id;
+	private String description;
+	private String email;
+	private String username;
+	private String name;
 }

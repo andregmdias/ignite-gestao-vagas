@@ -2,7 +2,6 @@ package br.com.giannatech.gestao_vagas.modules.candidate.useCases;
 
 import br.com.giannatech.gestao_vagas.exceptions.JobNotFoundException;
 import br.com.giannatech.gestao_vagas.exceptions.UserNotFoundException;
-import br.com.giannatech.gestao_vagas.modules.candidate.dto.CreateApplyJobRequestDTO;
 import br.com.giannatech.gestao_vagas.modules.candidate.entities.ApplyJobEntity;
 import br.com.giannatech.gestao_vagas.modules.candidate.repositories.ApplyJobRepository;
 import br.com.giannatech.gestao_vagas.modules.candidate.repositories.CandidateRepository;
@@ -15,25 +14,25 @@ import java.util.UUID;
 @Service
 public class ApplyJobCandidateUseCase {
 
-  @Autowired
-  private CandidateRepository candidateRepository;
-  @Autowired
-  private JobRepository jobRepository;
+	@Autowired
+	private CandidateRepository candidateRepository;
+	@Autowired
+	private JobRepository jobRepository;
 
-  @Autowired
-  private ApplyJobRepository applyJobRepository;
+	@Autowired
+	private ApplyJobRepository applyJobRepository;
 
-  public ApplyJobEntity execute(UUID candidateId, UUID jobId) {
-    candidateRepository
-        .findById(candidateId)
-        .orElseThrow(() -> new UserNotFoundException());
+	public ApplyJobEntity execute(UUID candidateId, UUID jobId) {
+		candidateRepository
+				.findById(candidateId)
+				.orElseThrow(() -> new UserNotFoundException());
 
-    jobRepository
-        .findById(jobId)
-        .orElseThrow(() -> new JobNotFoundException());
+		jobRepository
+				.findById(jobId)
+				.orElseThrow(() -> new JobNotFoundException());
 
-    var applyJobEntity = ApplyJobEntity.builder().jobId(jobId).candidateId(candidateId).build();
+		var applyJobEntity = ApplyJobEntity.builder().jobId(jobId).candidateId(candidateId).build();
 
-    return applyJobRepository.save(applyJobEntity);
-  }
+		return applyJobRepository.save(applyJobEntity);
+	}
 }

@@ -11,23 +11,23 @@ import java.util.UUID;
 @Service
 public class ProfileCandidateUseCase {
 
-  @Autowired
-  private CandidateRepository repository;
+	@Autowired
+	private CandidateRepository repository;
 
-  public ProfileCandidateReponseDTO execute(UUID id) {
-    var candidate =  this.repository
-        .findById(id)
-        .orElseThrow(() -> new UsernameNotFoundException("User not fond"));
+	public ProfileCandidateReponseDTO execute(UUID id) {
+		var candidate = this.repository
+				.findById(id)
+				.orElseThrow(() -> new UsernameNotFoundException("User not fond"));
 
-    var profileCandidate = ProfileCandidateReponseDTO
-        .builder()
-        .description(candidate.getDescription())
-        .username(candidate.getUsername())
-        .email(candidate.getEmail())
-        .id(candidate.getId())
-        .name(candidate.getName())
-        .build();
+		var profileCandidate = ProfileCandidateReponseDTO
+				.builder()
+				.description(candidate.getDescription())
+				.username(candidate.getUsername())
+				.email(candidate.getEmail())
+				.id(candidate.getId())
+				.name(candidate.getName())
+				.build();
 
-    return profileCandidate;
-  }
+		return profileCandidate;
+	}
 }

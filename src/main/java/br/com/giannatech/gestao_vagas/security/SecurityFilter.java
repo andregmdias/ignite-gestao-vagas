@@ -17,35 +17,35 @@ import java.io.IOException;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-  @Autowired
-  private JWTProvider jwtProvider;
+	@Autowired
+	private JWTProvider jwtProvider;
 
-  @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
-    String header = request.getHeader("Authorization");
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+		String header = request.getHeader("Authorization");
 
-    if (request.getRequestURI().startsWith("/companies")) {
-      SecurityContextHolder.getContext().setAuthentication(null);
-      if (header != null) {
-        var token = this.jwtProvider.validateToken(header);
-        if (token == null) {
-          response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-          return;
-        }
+		if (request.getRequestURI().startsWith("/companies")) {
+			SecurityContextHolder.getContext().setAuthentication(null);
+			if (header != null) {
+				var token = this.jwtProvider.validateToken(header);
+				if (token == null) {
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					return;
+				}
 
-        request.setAttribute("company_id", token.getSubject());
-        var roles = token.getClaim("roles").asList(Object.class);
+				request.setAttribute("company_id", token.getSubject());
+				var roles = token.getClaim("roles").asList(Object.class);
 
-        var grants = roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString())).toList();
+				var grants = roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString())).toList();
 
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(), null, grants);
+				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(), null, grants);
 
-        SecurityContextHolder.getContext().setAuthentication(auth);
-      }
-    }
+				SecurityContextHolder.getContext().setAuthentication(auth);
+			}
+		}
 
-    filterChain.doFilter(request, response);
-  }
+		filterChain.doFilter(request, response);
+	}
 
 }

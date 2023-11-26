@@ -1,8 +1,5 @@
 package br.com.giannatech.gestao_vagas.exceptions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -11,25 +8,28 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-  private final MessageSource messageSource;
+	private final MessageSource messageSource;
 
-  public ExceptionHandlerController(MessageSource messageSource) {
-    this.messageSource = messageSource;
-  }
+	public ExceptionHandlerController(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
 
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException e) {
-    List<ErrorMessageDto> errors = new ArrayList<>();
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+		List<ErrorMessageDto> errors = new ArrayList<>();
 
-    e.getBindingResult().getFieldErrors().forEach(error -> {
-      String message = messageSource.getMessage(error, LocaleContextHolder.getLocale());
+		e.getBindingResult().getFieldErrors().forEach(error -> {
+			String message = messageSource.getMessage(error, LocaleContextHolder.getLocale());
 
-      errors.add(new ErrorMessageDto(message, error.getField()));
-    });
+			errors.add(new ErrorMessageDto(message, error.getField()));
+		});
 
-    return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY);
-  }
+		return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
 }

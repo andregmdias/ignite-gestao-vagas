@@ -16,16 +16,16 @@ import javax.security.sasl.AuthenticationException;
 @RequestMapping("/candidates")
 public class AuthCandidateController {
 
-  @Autowired
-  private AuthCandidateUseCase authCandidateUseCase;
+	@Autowired
+	private AuthCandidateUseCase authCandidateUseCase;
 
-  @PostMapping("/auth")
-  public ResponseEntity<Object> auth(@RequestBody AuthCandidateRequestDTO dto){
-    try {
-      var token = this.authCandidateUseCase.execute(dto);
-      return ResponseEntity.ok(token);
-    }catch (AuthenticationException e){
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-    }
-  }
+	@PostMapping("/auth")
+	public ResponseEntity<Object> auth(@RequestBody AuthCandidateRequestDTO dto) {
+		try {
+			var token = this.authCandidateUseCase.execute(dto);
+			return ResponseEntity.ok(token);
+		} catch (AuthenticationException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+		}
+	}
 }

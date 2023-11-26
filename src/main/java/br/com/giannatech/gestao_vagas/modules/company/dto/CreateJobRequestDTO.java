@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateJobRequestDTO {
 
-  @Schema(description = "Job description", example = "Desenvolvedor Java", requiredMode = RequiredMode.REQUIRED)
-  private String description;
+	@Schema(description = "Job description", example = "Desenvolvedor Java", requiredMode = RequiredMode.REQUIRED)
+	private String description;
 
-  @Schema(description = "Job level", example = "Júnior", requiredMode = RequiredMode.REQUIRED)
-  private String level;
+	@Schema(description = "Job level", example = "Júnior", requiredMode = RequiredMode.REQUIRED)
+	private String level;
 
-  @Schema(description = "Job benefits", example = "VR, VT, Plano de saúde", requiredMode = RequiredMode.REQUIRED)
-  private String benefits;
+	@Schema(description = "Job benefits", example = "VR, VT, Plano de saúde", requiredMode = RequiredMode.REQUIRED)
+	private String benefits;
 }

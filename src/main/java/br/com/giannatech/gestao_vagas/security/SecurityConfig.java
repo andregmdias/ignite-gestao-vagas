@@ -15,38 +15,38 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 public class SecurityConfig {
 
-  @Autowired
-  private SecurityFilter securityFilter;
+	@Autowired
+	private SecurityFilter securityFilter;
 
-  @Autowired
-  private SecurityCandidateFilter candidateFilter;
+	@Autowired
+	private SecurityCandidateFilter candidateFilter;
 
-  private static final String[] SWAGGER_LIST = {
-      "/swagger-ui/**",
-      "/v3/api-docs/**",
-      "/swagger-resource/**"
-  };
+	private static final String[] SWAGGER_LIST = {
+			"/swagger-ui/**",
+			"/v3/api-docs/**",
+			"/swagger-resource/**"
+	};
 
-  @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity.csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(auth -> {
-          auth
-              .requestMatchers("/candidates").permitAll()
-              .requestMatchers("/companies").permitAll()
-              .requestMatchers("/candidates/auth").permitAll()
-              .requestMatchers("/companies/auth").permitAll()
-              .requestMatchers(SWAGGER_LIST).permitAll();
-          auth.anyRequest().authenticated();
-        })
-        .addFilterBefore(candidateFilter, BasicAuthenticationFilter.class)
-        .addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(auth -> {
+					auth
+							.requestMatchers("/candidates").permitAll()
+							.requestMatchers("/companies").permitAll()
+							.requestMatchers("/candidates/auth").permitAll()
+							.requestMatchers("/companies/auth").permitAll()
+							.requestMatchers(SWAGGER_LIST).permitAll();
+					auth.anyRequest().authenticated();
+				})
+				.addFilterBefore(candidateFilter, BasicAuthenticationFilter.class)
+				.addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
 
-    return httpSecurity.build();
-  }
+		return httpSecurity.build();
+	}
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

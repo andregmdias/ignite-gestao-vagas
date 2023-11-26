@@ -2,7 +2,7 @@ package br.com.giannatech.gestao_vagas.exceptions;
 
 public class CompanyNotFoundException extends RuntimeException {
 
-  public CompanyNotFoundException() {
-    super("Company not found");
-  }
+	public CompanyNotFoundException() {
+		super("Company not found");
+	}
 }
