@@ -1,5 +1,6 @@
 package br.com.giannatech.gestao_vagas.modules.company.controllers;
 
+import br.com.giannatech.gestao_vagas.exceptions.CompanyNotFoundException;
 import br.com.giannatech.gestao_vagas.modules.company.dto.CreateJobRequestDTO;
 import br.com.giannatech.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.giannatech.gestao_vagas.modules.company.repositories.CompanyRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -72,29 +74,26 @@ public class CreateJobControllerTest {
 
         @Test
     public void should_not_be_able_to_create_a_new_job_if_the_company_doesnt_exists() throws Exception {
-        var company = CompanyEntity.builder()
-                .cnpj("12345678912")
-                .username("COMPANY_USERNAME")
-                .email("company@email.com")
-                .password("123456789")
-                .website("https://companywebsite.com")
-                .description("COMPANY_DESCRIPTION")
-                .build();
-
-        companyRepository.saveAndFlush(company);
+        var companyId = UUID.randomUUID();
 
         var createJobDTO = CreateJobRequestDTO.builder()
                 .description("New job offer")
                 .level("MID LEVEL")
                 .benefits("ALL EXISTENT").build();
 
-        mvc.perform(
-                post("/companies/jobs")
-                        .header("Authorization", TestUtils.createCompanyJWT(company.getId(), "JAVAGAS_@123#"))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.objectToJson(createJobDTO))
-                )
-                .andExpect(status().isOk());
+        try{
+
+            mvc.perform(
+                            post("/companies/jobs")
+                                    .header("Authorization", TestUtils.createCompanyJWT(companyId, "JAVAGAS_@123#"))
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(TestUtils.objectToJson(createJobDTO))
+                    )
+                    .andExpect(status().isUnprocessableEntity());
+        }catch (Exception e) {
+            assertTrue(e instanceof CompanyNotFoundException);
+            assertTrue(e.getMessage().equals("Company not found"));
+        }
     }
 
 

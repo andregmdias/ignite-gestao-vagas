@@ -2,6 +2,7 @@ package br.com.giannatech.gestao_vagas.modules.company.controllers;
 
 import java.util.UUID;
 
+import br.com.giannatech.gestao_vagas.exceptions.CompanyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,7 +52,12 @@ public class CreateJobController {
         .companyId(UUID.fromString(companyId))
         .build();
 
-    var createdJob = this.createJobUseCase.execute(jobEntity);
-    return ResponseEntity.ok(createdJob);
+    try{
+
+      var createdJob = this.createJobUseCase.execute(jobEntity);
+      return ResponseEntity.ok(createdJob);
+    }catch (CompanyNotFoundException e){
+      return ResponseEntity.unprocessableEntity().body(e.getMessage());
+    }
   }
 }
