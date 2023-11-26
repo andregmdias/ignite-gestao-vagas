@@ -55,7 +55,9 @@ public class CreateJobController {
 
 			var createdJob = this.createJobUseCase.execute(jobEntity);
 			return ResponseEntity.ok(createdJob);
-		} catch (CompanyNotFoundException e) {
+		} catch (CompanyNotFoundException e ) {
+			return ResponseEntity.unprocessableEntity().body(e.getMessage());
+		}catch (Exception e) {
 			return ResponseEntity.unprocessableEntity().body(e.getMessage());
 		}
 	}
