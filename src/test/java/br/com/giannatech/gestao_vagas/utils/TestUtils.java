@@ -1,6 +1,5 @@
 package br.com.giannatech.gestao_vagas.utils;
 
-import br.com.giannatech.gestao_vagas.modules.company.dto.AuthCompanyResponseDTO;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,7 +12,7 @@ import java.util.UUID;
 
 public class TestUtils {
 
-    public static String objectToJson(Object object){
+    public static String objectToJson(Object object) {
         final ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(object);
@@ -21,7 +20,6 @@ public class TestUtils {
             throw new RuntimeException(e);
         }
     }
-
 
     public static String createCompanyJWT(UUID companyId, String secret) {
 

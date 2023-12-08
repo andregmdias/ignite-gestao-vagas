@@ -1,9 +1,9 @@
 package br.com.giannatech.gestao_vagas.modules.candidate.useCases;
 
+import br.com.giannatech.gestao_vagas.exceptions.UserNotFoundException;
 import br.com.giannatech.gestao_vagas.modules.candidate.dto.ProfileCandidateReponseDTO;
 import br.com.giannatech.gestao_vagas.modules.candidate.repositories.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -17,7 +17,7 @@ public class ProfileCandidateUseCase {
 	public ProfileCandidateReponseDTO execute(UUID id) {
 		var candidate = this.repository
 				.findById(id)
-				.orElseThrow(() -> new UsernameNotFoundException("User not fond"));
+				.orElseThrow(() -> new UserNotFoundException());
 
 		var profileCandidate = ProfileCandidateReponseDTO
 				.builder()

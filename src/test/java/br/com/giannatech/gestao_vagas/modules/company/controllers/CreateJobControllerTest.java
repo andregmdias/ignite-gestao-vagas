@@ -1,6 +1,5 @@
 package br.com.giannatech.gestao_vagas.modules.company.controllers;
 
-import br.com.giannatech.gestao_vagas.exceptions.CompanyNotFoundException;
 import br.com.giannatech.gestao_vagas.modules.company.dto.CreateJobRequestDTO;
 import br.com.giannatech.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.giannatech.gestao_vagas.modules.company.repositories.CompanyRepository;
@@ -20,7 +19,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -64,11 +62,10 @@ public class CreateJobControllerTest {
 				.benefits("ALL EXISTENT").build();
 
 		mvc.perform(
-						post("/companies/jobs")
-								.header("Authorization", TestUtils.createCompanyJWT(company.getId(), "JAVAGAS_@123#"))
-								.contentType(MediaType.APPLICATION_JSON)
-								.content(TestUtils.objectToJson(createJobDTO))
-				)
+				post("/companies/jobs")
+						.header("Authorization", TestUtils.createCompanyJWT(company.getId(), "JAVAGAS_@123#"))
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(TestUtils.objectToJson(createJobDTO)))
 				.andExpect(status().isOk());
 	}
 
@@ -82,11 +79,10 @@ public class CreateJobControllerTest {
 				.benefits("ALL EXISTENT").build();
 
 		mvc.perform(
-						post("/companies/jobs")
-								.header("Authorization", TestUtils.createCompanyJWT(companyId, "JAVAGAS_@123#"))
-								.contentType(MediaType.APPLICATION_JSON)
-								.content(TestUtils.objectToJson(createJobDTO))
-				)
+				post("/companies/jobs")
+						.header("Authorization", TestUtils.createCompanyJWT(companyId, "JAVAGAS_@123#"))
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(TestUtils.objectToJson(createJobDTO)))
 				.andExpect(status().isUnprocessableEntity());
 	}
 }
