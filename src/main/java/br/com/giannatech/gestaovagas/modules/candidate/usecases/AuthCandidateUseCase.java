@@ -54,8 +54,8 @@ public class AuthCandidateUseCase {
 
 		return AuthCandidateResponseDTO
 				.builder()
-				.access_token(token)
-				.expires_in(expiresIn.toEpochMilli())
+				.accessToken(token)
+				.expiresIn(expiresIn.toEpochMilli())
 				.build();
 	}
 }
