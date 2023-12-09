@@ -2,6 +2,7 @@ package br.com.giannatech.gestaovagas.modules.company.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class CompanyController {
 	public ResponseEntity<Object> create(@RequestBody @Valid CompanyEntity companyEntity) {
 		try {
 			var createdCompany = this.createCompanyUseCase.execute(companyEntity);
-			return new ResponseEntity<>(createdCompany, org.springframework.http.HttpStatus.CREATED);
+			return new ResponseEntity<>(createdCompany, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return ResponseEntity.unprocessableEntity().body(e.getMessage());
 		}

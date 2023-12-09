@@ -1,6 +1,5 @@
 package br.com.giannatech.gestaovagas.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -15,11 +14,14 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 public class SecurityConfig {
 
-	@Autowired
 	private SecurityCompanyFilter securityCompanyFilter;
 
-	@Autowired
 	private SecurityCandidateFilter candidateFilter;
+
+	public SecurityConfig(SecurityCompanyFilter securityCompanyFilter, SecurityCandidateFilter candidateFilter) {
+		this.securityCompanyFilter = securityCompanyFilter;
+		this.candidateFilter = candidateFilter;
+	}
 
 	private static final String[] PERMITTED_URLS = {
 			"/actuator/**",

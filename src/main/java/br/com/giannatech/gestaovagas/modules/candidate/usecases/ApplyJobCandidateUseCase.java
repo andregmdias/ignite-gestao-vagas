@@ -24,16 +24,23 @@ public class ApplyJobCandidateUseCase {
 	private ApplyJobRepository applyJobRepository;
 
 	public ApplyJobEntity execute(UUID candidateId, UUID jobId) {
-		candidateRepository
-				.findById(candidateId)
-				.orElseThrow(UserNotFoundException::new);
-
-		jobRepository
-				.findById(jobId)
-				.orElseThrow(JobNotFoundException::new);
+		validateCandidate(candidateId);
+		validateJob(jobId);
 
 		var applyJobEntity = ApplyJobEntity.builder().jobId(jobId).candidateId(candidateId).build();
 
 		return applyJobRepository.save(applyJobEntity);
+	}
+
+	private void validateCandidate(UUID candidateId) {
+		candidateRepository
+				.findById(candidateId)
+				.orElseThrow(UserNotFoundException::new);
+	}
+
+	private void validateJob(UUID jobId) {
+		jobRepository
+				.findById(jobId)
+				.orElseThrow(JobNotFoundException::new);
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.giannatech.gestaovagas.exceptions.UserFoundException;
+import br.com.giannatech.gestaovagas.exceptions.UserNotFoundException;
 import br.com.giannatech.gestaovagas.modules.candidate.dto.ProfileCandidateReponseDTO;
 import br.com.giannatech.gestaovagas.modules.candidate.entities.ApplyJobEntity;
 import br.com.giannatech.gestaovagas.modules.candidate.entities.CandidateEntity;
@@ -113,7 +114,7 @@ public class CandidateController {
 		try {
 			var applyJobCandidate = this.applyJobCandidateUseCase.execute(candidateUUID, jobId);
 			return ResponseEntity.ok(applyJobCandidate);
-		} catch (Exception e) {
+		} catch (UserNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
